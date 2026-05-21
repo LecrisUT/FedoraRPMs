@@ -1,0 +1,32 @@
+_:
+  - &trigger
+    trigger: commit
+    branch: main
+  - &actions-use-spec
+    fix-spec-file: []
+    create-archive:
+      - sh -c 'echo ${PACKIT_DOWNSTREAM_PACKAGE_NAME}.spec'
+    get-current-version:
+      - sh -c 'rpmspec -q --qf "%{Version}" --srpm ${PACKIT_DOWNSTREAM_PACKAGE_NAME}.spec'
+  - &actions-rust2rpm
+    <<: *actions-use-spec
+    fix-spec-file:
+      - sh -c 'rust2rpm @${PACKIT_PROJECT_VERSION}'
+  - &actions-rust2rpm-with-patch
+    <<: *actions-use-spec
+    fix-spec-file:
+      - sh -c 'rust2rpm -r @${PACKIT_PROJECT_VERSION}'
+
+packages: {}
+
+targets:
+  - fedora-rawhide
+  - epel9
+  - epel10
+
+jobs:
+  - job: copr_build
+    owner: lecris
+    <<: *trigger
+#  - job: tests
+#    <<: *trigger
