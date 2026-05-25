@@ -1,3 +1,5 @@
 *.rpm
 *.tar.gz
 *.crate
+results/
+*.log
