@@ -17,7 +17,13 @@ _:
     fix-spec-file:
       - sh -c 'rust2rpm -r @${PACKIT_PROJECT_VERSION}'
 
-packages: {}
+packages:
+  koneko:
+    paths: [ koneko ]
+    specfile_path: koneko.spec
+    downstream_package_name: koneko
+    upstream_package_name: koneko
+    actions: *actions-use-spec
 
 targets:
   - fedora-rawhide
