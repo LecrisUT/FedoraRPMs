@@ -1,5 +1,5 @@
 Name:           koneko
-Version:        1.0
+Version:        1.0.1
 Release:        %autorelease
 Summary:        oneko, but for the KDE Wayland compositor
 URL:            https://codeberg.org/snowkat/koneko
@@ -36,12 +36,7 @@ usable on Wayland.
 
 
 %install
-%make_build "PKGTOOL=kpackagetool6 --type KWin/Script --packageroot %{buildroot}%{_datadir}/kwin/scripts" install
-
-
-# %%check
-# Have not figured out how to run the tests in rpm build, feel free to suggest ideas
-# %%make_build test
+%make_build DESTDIR=%{buildroot} PREFIX=%{_prefix} install
 
 
 %files
