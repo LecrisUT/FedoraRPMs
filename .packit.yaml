@@ -1,7 +1,7 @@
 _:
   - &trigger
     trigger: commit
-    branch: main
+    branch: moonlight
   - &actions-use-spec
     fix-spec-file: []
     create-archive:
@@ -17,16 +17,22 @@ _:
     fix-spec-file:
       - sh -c 'rust2rpm -r @${PACKIT_PROJECT_VERSION}'
 
-packages: {}
+packages:
+  moonlight-qt:
+    paths: [ moonlight-qt ]
+    specfile_path: moonlight-qt.spec
+    downstream_package_name: moonlight-qt
+    upstream_package_name: moonlight-qt
+    actions: *actions-use-spec
 
 targets:
   - fedora-rawhide
-  - epel9
-  - epel10
+  - fedora-44
 
 jobs:
   - job: copr_build
     owner: lecris
+    project: moonlight
     <<: *trigger
 #  - job: tests
 #    <<: *trigger
