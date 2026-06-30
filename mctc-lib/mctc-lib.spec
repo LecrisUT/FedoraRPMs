@@ -1,3 +1,5 @@
+%global soversion 0
+
 Name:           mctc-lib
 Version:        0.5.2
 Release:        %autorelease
@@ -10,8 +12,8 @@ BuildRequires:  python3-devel
 BuildRequires:  gcc-gfortran
 BuildRequires:  meson
 BuildRequires:  ninja-build
-BuildRequires:  pkgconfig(jonquil)
-BuildRequires:  pkgconfig(toml-f)
+BuildRequires:  cmake(jonquil)
+BuildRequires:  cmake(toml-f)
 # For docs
 BuildRequires:  rubygem-asciidoctor
 
@@ -32,31 +34,35 @@ developing applications that use %{name}.
 %prep
 %autosetup -p1
 
+
+%conf
+%cmake \
+  -DCMAKE_INSTALL_INCLUDEDIR:PATH=%{_fmoddir} \
+  -Djonquil-module-dir:STRING=mctc-lib \
+  -DMCTCLIB_WITH_OpenMP:BOOL=ON \
+  -DMCTCLIB_WITH_JSON:BOOL=ON
+
+
 %build
-%meson
-%meson_build
+%cmake_build
+
 
 %install
-%meson_install
-# Remove static libraries
-rm -f %{buildroot}%{_libdir}/*.a
+%cmake_install
 
-# Move module files
-mkdir -p %{buildroot}%{_fmoddir}
-mv %{buildroot}%{_includedir}/mctc-lib/*/*.mod %{buildroot}%{_fmoddir}
-rm -rf %{buildroot}%{_includedir}/mctc-lib/
 
 %files
 %license LICENSE
 %doc README.md
 %{_bindir}/mctc-convert
-%{_mandir}/man1/mctc-convert.1*
-%{_libdir}/libmctc-lib*.so.0*
+%{_libdir}/libmctc-lib.so.%{soversion}{,.}*
 
 %files devel
-%{_fmoddir}/mctc_*.mod
+%{_fmoddir}/mctc-lib/
+%{_libdir}/cmake/mctc-lib/
 %{_libdir}/pkgconfig/mctc-lib.pc
 %{_libdir}/libmctc-lib.so
+
 
 %changelog
 %autochangelog
