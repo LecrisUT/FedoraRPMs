@@ -9,8 +9,7 @@ URL:            https://grimme-lab.github.io/mctc-lib/
 Source0:        https://github.com/grimme-lab/mctc-lib/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  gcc-gfortran
-BuildRequires:  meson
-BuildRequires:  ninja-build
+BuildRequires:  cmake
 BuildRequires:  cmake(jonquil)
 BuildRequires:  cmake(toml-f)
 # For docs
