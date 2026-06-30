@@ -13,7 +13,8 @@ BuildRequires:  gcc-gfortran
 BuildRequires:  cmake(test-drive)
 
 %description
-A TOML parser implementation for data serialization and deserialization in Fortran.
+A TOML parser implementation for data serialization and deserialization in
+Fortran.
 
 %package        devel
 Summary:        Development files for %{name}

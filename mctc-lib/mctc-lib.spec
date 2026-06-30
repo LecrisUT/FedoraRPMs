@@ -8,7 +8,6 @@ License:        Apache-2.0
 URL:            https://grimme-lab.github.io/mctc-lib/
 Source0:        https://github.com/grimme-lab/mctc-lib/archive/v%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires:  python3-devel
 BuildRequires:  gcc-gfortran
 BuildRequires:  meson
 BuildRequires:  ninja-build
