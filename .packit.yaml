@@ -36,6 +36,12 @@ packages:
     downstream_package_name: toml-f
     upstream_package_name: toml-f
     actions: *actions-use-spec
+  test-drive:
+    paths: [ test-drive ]
+    specfile_path: test-drive.spec
+    downstream_package_name: test-drive
+    upstream_package_name: test-drive
+    actions: *actions-use-spec
 
 targets:
   - fedora-rawhide

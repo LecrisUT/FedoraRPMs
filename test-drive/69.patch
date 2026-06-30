@@ -1,0 +1,29 @@
+From 94a963b54392a1068e12ecb681e0909a0c2515fc Mon Sep 17 00:00:00 2001
+From: Cristian Le <git@lecris.dev>
+Date: Tue, 30 Jun 2026 13:12:25 +0200
+Subject: [PATCH] Allow users to configure the module-dir install path
+
+---
+ config/CMakeLists.txt | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/config/CMakeLists.txt b/config/CMakeLists.txt
+index dd07e9a..c1c4935 100644
+--- a/config/CMakeLists.txt
++++ b/config/CMakeLists.txt
+@@ -15,8 +15,14 @@ option(BUILD_SHARED_LIBS "Whether the libraries built should be shared" FALSE)
+ option(TESTDRIVE_BUILD_TESTING "Enable testing for this project" ON)
+ 
+ set(
+-  module-dir
++  "${PROJECT_NAME}-module-dir"
+   "${PROJECT_NAME}/${CMAKE_Fortran_COMPILER_ID}-${CMAKE_Fortran_COMPILER_VERSION}"
++  CACHE STRING
++  "Subdirectory to install generated module files to"
++)
++set(
++  module-dir
++  "${${PROJECT_NAME}-module-dir}"
+ )
+ set(module-dir "${module-dir}" PARENT_SCOPE)
+ 
