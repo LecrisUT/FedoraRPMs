@@ -51,6 +51,10 @@ developing applications that use %{name}.
 %cmake_install
 
 
+%check
+%ctest
+
+
 %files
 %license LICENSE
 %doc README.md

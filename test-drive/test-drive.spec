@@ -46,6 +46,10 @@ developing applications that use %{name}.
 %cmake_install
 
 
+%check
+%ctest
+
+
 %files
 %license LICENSE-Apache LICENSE-MIT
 %doc README.md
