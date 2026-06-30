@@ -1,7 +1,7 @@
 _:
   - &trigger
     trigger: commit
-    branch: main
+    branch: mctc-lib
   - &actions-use-spec
     fix-spec-file: []
     create-archive:
@@ -17,16 +17,21 @@ _:
     fix-spec-file:
       - sh -c 'rust2rpm -r @${PACKIT_PROJECT_VERSION}'
 
-packages: {}
+packages:
+  mctc-lib:
+    paths: [ mctc-lib ]
+    specfile_path: mctc-lib.spec
+    downstream_package_name: mctc-lib
+    upstream_package_name: mctc-lib
+    actions: *actions-use-spec
 
 targets:
   - fedora-rawhide
-  - epel9
-  - epel10
 
 jobs:
   - job: copr_build
     owner: lecris
+    project: mctc-lib
     <<: *trigger
 #  - job: tests
 #    <<: *trigger
