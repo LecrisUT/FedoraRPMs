@@ -4,8 +4,7 @@ Name:           test-drive
 Version:        0.6.1
 Release:        %autorelease
 Summary:        The simple testing framework
-# Automatically converted from old format: ASL 2.0 or MIT - review is highly recommended.
-License:        Apache-2.0 OR LicenseRef-Callaway-MIT
+License:        MIT OR Apache-2.0
 URL:            https://github.com/fortran-lang/test-drive
 Source0:        https://github.com/fortran-lang/test-drive/archive/v%{version}/%{name}-%{version}.tar.gz
 
