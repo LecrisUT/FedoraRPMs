@@ -36,7 +36,7 @@ developing applications that use %{name}.
 %conf
 %cmake \
   -DCMAKE_INSTALL_INCLUDEDIR:PATH=%{_fmoddir} \
-  -Djonquil-module-dir:STRING=mctc-lib \
+  -Dmctc-lib-module-dir:STRING=mctc-lib \
   -DMCTCLIB_WITH_OpenMP:BOOL=ON \
   -DMCTCLIB_WITH_JSON:BOOL=ON
 
