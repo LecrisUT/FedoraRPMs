@@ -24,6 +24,18 @@ packages:
     downstream_package_name: mctc-lib
     upstream_package_name: mctc-lib
     actions: *actions-use-spec
+  jonquil:
+    paths: [ jonquil ]
+    specfile_path: jonquil.spec
+    downstream_package_name: jonquil
+    upstream_package_name: jonquil
+    actions: *actions-use-spec
+  toml-f:
+    paths: [ toml-f ]
+    specfile_path: toml-f.spec
+    downstream_package_name: toml-f
+    upstream_package_name: toml-f
+    actions: *actions-use-spec
 
 targets:
   - fedora-rawhide
