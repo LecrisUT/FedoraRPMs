@@ -34,8 +34,9 @@ developing applications that use %{name}.
 
 
 %conf
+# TODO: Account for absolute path CMAKE_INSTALL_INCLUDEDIR so we can use %%{_fmoddir}
 %cmake \
-  -DCMAKE_INSTALL_INCLUDEDIR:PATH=%{_fmoddir} \
+  -DCMAKE_INSTALL_INCLUDEDIR:PATH=%{_lib}/gfortran/modules \
   -Dmctc-lib-module-dir:STRING=mctc-lib \
   -DMCTCLIB_WITH_OpenMP:BOOL=ON \
   -DMCTCLIB_WITH_JSON:BOOL=ON

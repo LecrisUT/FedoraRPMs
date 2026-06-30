@@ -30,8 +30,9 @@ developing applications that use %{name}.
 
 
 %conf
+# TODO: Account for absolute path CMAKE_INSTALL_INCLUDEDIR so we can use %%{_fmoddir}
 %cmake \
-  -DCMAKE_INSTALL_INCLUDEDIR:PATH=%{_fmoddir} \
+  -DCMAKE_INSTALL_INCLUDEDIR:PATH=%{_lib}/gfortran/modules \
   -Dtoml-f-module-dir:STRING=toml-f
 
 
