@@ -30,6 +30,12 @@ packages:
     downstream_package_name: pyclibrary
     upstream_package_name: pyclibrary
     actions: *actions-use-spec
+  cuda-bindings:
+    paths: [ cuda-bindings ]
+    specfile_path: cuda-bindings.spec
+    downstream_package_name: cuda-bindings
+    upstream_package_name: cuda-bindings
+    actions: *actions-use-spec
 
 targets:
   - fedora-44
