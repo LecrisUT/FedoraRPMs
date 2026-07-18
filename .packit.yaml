@@ -1,7 +1,7 @@
 _:
   - &trigger
     trigger: commit
-    branch: main
+    branch: cuda
   - &actions-use-spec
     fix-spec-file: []
     create-archive:
@@ -17,16 +17,23 @@ _:
     fix-spec-file:
       - sh -c 'rust2rpm -r @${PACKIT_PROJECT_VERSION}'
 
-packages: {}
+packages:
+  cuda-pathfinder:
+    paths: [ cuda-pathfinder ]
+    specfile_path: cuda-pathfinder.spec
+    downstream_package_name: cuda-pathfinder
+    upstream_package_name: cuda-pathfinder
+    actions: *actions-use-spec
 
 targets:
-  - fedora-rawhide
-  - epel9
-  - epel10
+  - fedora-44
 
 jobs:
   - job: copr_build
     owner: lecris
+    project: cuda-example
+    additional_repos:
+      - https://developer.download.nvidia.com/compute/cuda/repos/$distname$releasever/$basearch/
     <<: *trigger
 #  - job: tests
 #    <<: *trigger
