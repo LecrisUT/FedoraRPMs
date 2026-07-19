@@ -42,6 +42,12 @@ packages:
     downstream_package_name: cuda-core
     upstream_package_name: cuda-core
     actions: *actions-use-spec
+  cuda-python:
+    paths: [ cuda-python ]
+    specfile_path: cuda-python.spec
+    downstream_package_name: cuda-python
+    upstream_package_name: cuda-python
+    actions: *actions-use-spec
 
 targets:
   - fedora-44
