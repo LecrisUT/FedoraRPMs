@@ -36,6 +36,12 @@ packages:
     downstream_package_name: cuda-bindings
     upstream_package_name: cuda-bindings
     actions: *actions-use-spec
+  cuda-core:
+    paths: [ cuda-core ]
+    specfile_path: cuda-core.spec
+    downstream_package_name: cuda-core
+    upstream_package_name: cuda-core
+    actions: *actions-use-spec
 
 targets:
   - fedora-44
