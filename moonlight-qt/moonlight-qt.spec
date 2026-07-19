@@ -32,7 +32,16 @@ Release:        %autorelease
 Version:        %forgeversion
 Summary:        GameStream client for PCs
 
-License:        GPL-3.0-or-later
+# License breakdown:
+# - Main project: GPL-3.0-or-later
+# - moonlight-common-c/moonlight-common-c: GPL-3.0-or-later
+# - qmdnsengine/qmdnsengine: MIT
+# - app/SDL_GameControllerDB: Zlib
+# - h264bitstream/h264bitstream: LGPL-2.1-only
+# - moonlight-common-c/moonlight-common-c/enet: MIT
+# - moonlight-common-c/moonlight-common-c/nanors: MIT
+
+License:        GPL-3.0-or-later AND MIT AND Zlib AND LGPL-2.1-only
 URL:            %forgeurl0
 Source0:        %forgesource0
 Source1:        %forgesource1
@@ -87,6 +96,12 @@ tar -xf %{SOURCE4} --strip-components=1 -C h264bitstream/h264bitstream
 tar -xf %{SOURCE5} --strip-components=1 -C moonlight-common-c/moonlight-common-c/enet
 tar -xf %{SOURCE6} --strip-components=1 -C moonlight-common-c/moonlight-common-c/nanors
 
+cp qmdnsengine/qmdnsengine/LICENSE.txt LICENSE-qmdnsengine
+cp app/SDL_GameControllerDB/LICENSE LICENSE-SDL_GameControllerDB
+cp h264bitstream/h264bitstream/LICENSE LICENSE-h264bitstream
+cp moonlight-common-c/moonlight-common-c/enet/LICENSE LICENSE-enet
+cp moonlight-common-c/moonlight-common-c/nanors/LICENSE LICENSE-nanors
+
 
 %conf
 %qmake_qt6 \
@@ -109,7 +124,7 @@ appstreamcli validate --no-net \
 
 
 %files
-%license LICENSE
+%license LICENSE LICENSE-qmdnsengine LICENSE-SDL_GameControllerDB LICENSE-h264bitstream LICENSE-enet LICENSE-nanors
 %doc README.md
 %{_bindir}/moonlight
 %{_datadir}/applications/com.moonlight_stream.Moonlight.desktop
