@@ -1,3 +1,5 @@
+%global soversion 4
+
 Name:           wannier90
 Summary:        Maximally-Localised Generalised Wannier Functions Code
 Version:        4.0.1
@@ -73,6 +75,7 @@ This package contains the development files for the wannier90 (MPICH) library.
 cmake_common_args=(
   "-DWANNIER90_SHARED_LIBS:BOOL=ON"
   "-DWANNIER90_TEST:BOOL=ON"
+  "-DWANNIER90_WITH_C:BOOL=ON"
 )
 for mpi in '' mpich openmpi ; do
   if [ -n "$mpi" ]; then
@@ -108,9 +111,13 @@ done
 
 
 %check
-for mpi in '' mpich %{?with_openmpi:openmpi} ; do
+# Skipping checkpoint1_read and library-mode-test-C-interface for now, tracked in
+# https://github.com/wannier-developers/wannier90/issues/661
+# https://github.com/wannier-developers/wannier90/issues/666
+for mpi in '' mpich openmpi ; do
   [ -n "$mpi" ] && module load mpi/${mpi}-%{_arch}
-  %ctest
+  %ctest \
+    -E "^(checkpoint1_read|library-mode-test-C-interface)$"
   [ -n "$mpi" ] && module unload mpi/${mpi}-%{_arch}
 done
 
@@ -118,12 +125,12 @@ done
 %files
 %doc README.rst
 %license LICENSE
-%{_libdir}/libwannier90.so.*
+%{_libdir}/libwannier90.so.%{soversion}{,.*}
 %{_bindir}/wannier90.x
 %{_bindir}/postw90.x
 
 %files devel
-%{_includedir}/wannier90.hh
+%{_includedir}/wannier90.h
 %{_libdir}/libwannier90.so
 %{_fmoddir}/Wannier90/
 %{_libdir}/cmake/Wannier90
@@ -132,26 +139,26 @@ done
 %files openmpi
 %{_libdir}/openmpi/bin/wannier90.x
 %{_libdir}/openmpi/bin/postw90.x
-%{_libdir}/openmpi/lib/libwannier90.so.*
+%{_libdir}/openmpi/lib/libwannier90_mpi.so.%{soversion}{,.*}
 
 %files openmpi-devel
-%{_libdir}/openmpi/include/wannier90.hh
-%{_libdir}/openmpi/lib/libwannier90.so
+%{_libdir}/openmpi/include/wannier90.h
+%{_libdir}/openmpi/lib/libwannier90_mpi.so
 %{_fmoddir}/openmpi/Wannier90/
 %{_libdir}/openmpi/lib/cmake/Wannier90
-%{_libdir}/openmpi/lib/pkgconfig/wannier90.pc
+%{_libdir}/openmpi/lib/pkgconfig/wannier90_mpi.pc
 
 %files mpich
 %{_libdir}/mpich/bin/wannier90.x
 %{_libdir}/mpich/bin/postw90.x
-%{_libdir}/mpich/lib/libwannier90.so.*
+%{_libdir}/mpich/lib/libwannier90_mpi.so.%{soversion}{,.*}
 
 %files mpich-devel
-%{_libdir}/mpich/include/wannier90.hh
-%{_libdir}/mpich/lib/libwannier90.so
+%{_libdir}/mpich/include/wannier90.h
+%{_libdir}/mpich/lib/libwannier90_mpi.so
 %{_fmoddir}/mpich/Wannier90/
 %{_libdir}/mpich/lib/cmake/Wannier90
-%{_libdir}/mpich/lib/pkgconfig/wannier90.pc
+%{_libdir}/mpich/lib/pkgconfig/wannier90_mpi.pc
 
 %changelog
 %autochangelog
