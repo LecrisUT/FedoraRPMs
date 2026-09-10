@@ -1,13 +1,20 @@
 %global soversion 4
 
+%global         forgeurl0 https://github.com/wannier-developers/wannier90
+%global         version0  4.0.2
+%global         commit0   65fde2f1011b8655c33421f4055b5986fa429a11
+
 Name:           wannier90
 Summary:        Maximally-Localised Generalised Wannier Functions Code
-Version:        4.0.1
+
 Release:        %autorelease
+%forgemeta -a
+Version:        %forgeversion
+
 License:        LGPL-2.1-or-later
 URL:            https://www.wannier.org/
 
-Source:         https://github.com/wannier-developers/wannier90/archive/refs/tags/v%{version}.tar.gz
+Source:         %{forgesource0}
 
 BuildRequires:  cmake
 BuildRequires:  gcc-fortran
@@ -63,7 +70,7 @@ This package contains the development files for the wannier90 (MPICH) library.
 
 
 %prep
-%autosetup -n wannier90-%{version}
+%forgeautosetup -p1
 
 # $MPI_SUFFIX will be evaluated in the loops below, set by mpi modules
 %global _vpath_builddir %{_vendor}-%{_target_os}-build${MPI_SUFFIX:-_serial}
@@ -111,13 +118,9 @@ done
 
 
 %check
-# Skipping checkpoint1_read and library-mode-test-C-interface for now, tracked in
-# https://github.com/wannier-developers/wannier90/issues/661
-# https://github.com/wannier-developers/wannier90/issues/666
 for mpi in '' mpich openmpi ; do
   [ -n "$mpi" ] && module load mpi/${mpi}-%{_arch}
-  %ctest \
-    -E "^(checkpoint1_read|library-mode-test-C-interface)$"
+  %ctest
   [ -n "$mpi" ] && module unload mpi/${mpi}-%{_arch}
 done
 
