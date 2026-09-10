@@ -36,13 +36,14 @@ usable on Wayland.
 
 
 %install
-%make_build DESTDIR=%{buildroot} PREFIX=%{_prefix} install
+# Cannot use %%make_install here because we want to use kwin-wayland path instead
+%make_build PKGFLAGS="--type KWin/Script --packageroot %{buildroot}%{_datadir}/kwin-wayland/scripts" install
 
 
 %files
 %license LICENSE.MIT0
 %doc README.md
-%{_datadir}/kwin/scripts/xyz.datagirl.koneko/
+%{_datadir}/kwin-wayland/scripts/xyz.datagirl.koneko/
 
 
 %changelog
