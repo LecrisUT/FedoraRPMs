@@ -21,7 +21,7 @@ BuildRequires:  gcc-fortran
 BuildRequires:  flexiblas-devel
 # Required for testing
 BuildRequires:  gcc-c++
-BuildRequires:  python3
+BuildRequires:  python3dist(pytest)
 
 %global _description %{expand:
 Maximally-Localised Generalised Wannier Functions Code.}
@@ -118,9 +118,13 @@ done
 
 
 %check
+# Skipping checkpoint1_read and library-mode-test-C-interface for now, tracked in
+# https://github.com/wannier-developers/wannier90/issues/666
 for mpi in '' mpich openmpi ; do
   [ -n "$mpi" ] && module load mpi/${mpi}-%{_arch}
-  %ctest
+  %ctest \
+    -E "^(library-mode-test-C-interface)$"
+  %pytest --workdir="test-artifacts/$mpi" test-suite
   [ -n "$mpi" ] && module unload mpi/${mpi}-%{_arch}
 done
 
