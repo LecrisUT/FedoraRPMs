@@ -15,7 +15,10 @@ License:        LGPL-2.1-or-later
 URL:            https://www.wannier.org/
 
 Source:         %{forgesource0}
-ExcludeArch:    %{ix86}
+# ix86 because https://fedoraproject.org/wiki/Changes/EncourageI686LeafRemoval
+# s390x because tests fail and unknown if upstream wants to support
+#  https://github.com/wannier-developers/wannier90/issues/731
+ExcludeArch:    %{ix86} s390x
 
 BuildRequires:  cmake
 BuildRequires:  gcc-fortran
@@ -132,7 +135,7 @@ done
 
 
 %files
-%doc README.rst
+%doc README.md
 %license LICENSE
 %{_libdir}/libwannier90.so.%{soversion}{,.*}
 %{_bindir}/wannier90.x
@@ -148,26 +151,26 @@ done
 %files openmpi
 %{_libdir}/openmpi/bin/wannier90.x
 %{_libdir}/openmpi/bin/postw90.x
-%{_libdir}/openmpi/lib/libwannier90_mpi.so.%{soversion}{,.*}
+%{_libdir}/openmpi/lib/libwannier90.so.%{soversion}{,.*}
 
 %files openmpi-devel
 %{_libdir}/openmpi/include/wannier90.h
-%{_libdir}/openmpi/lib/libwannier90_mpi.so
+%{_libdir}/openmpi/lib/libwannier90.so
 %{_fmoddir}/openmpi/Wannier90/
 %{_libdir}/openmpi/lib/cmake/Wannier90
-%{_libdir}/openmpi/lib/pkgconfig/wannier90_mpi.pc
+%{_libdir}/openmpi/lib/pkgconfig/wannier90.pc
 
 %files mpich
 %{_libdir}/mpich/bin/wannier90.x
 %{_libdir}/mpich/bin/postw90.x
-%{_libdir}/mpich/lib/libwannier90_mpi.so.%{soversion}{,.*}
+%{_libdir}/mpich/lib/libwannier90.so.%{soversion}{,.*}
 
 %files mpich-devel
 %{_libdir}/mpich/include/wannier90.h
-%{_libdir}/mpich/lib/libwannier90_mpi.so
+%{_libdir}/mpich/lib/libwannier90.so
 %{_fmoddir}/mpich/Wannier90/
 %{_libdir}/mpich/lib/cmake/Wannier90
-%{_libdir}/mpich/lib/pkgconfig/wannier90_mpi.pc
+%{_libdir}/mpich/lib/pkgconfig/wannier90.pc
 
 %changelog
 %autochangelog
