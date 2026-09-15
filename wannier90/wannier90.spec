@@ -15,6 +15,7 @@ License:        LGPL-2.1-or-later
 URL:            https://www.wannier.org/
 
 Source:         %{forgesource0}
+ExcludeArch:    %{ix86}
 
 BuildRequires:  cmake
 BuildRequires:  gcc-fortran
