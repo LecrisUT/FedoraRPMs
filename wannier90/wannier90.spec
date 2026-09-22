@@ -79,11 +79,9 @@ This package contains the development files for the wannier90 (MPICH) library.
 
 # $MPI_SUFFIX will be evaluated in the loops below, set by mpi modules
 %global _vpath_builddir %{_vendor}-%{_target_os}-build${MPI_SUFFIX:-_serial}
-# We are running the module load/unload manually until there is a macro-like way to expand this
-. /etc/profile.d/modules.sh
 
 
-%build
+%conf
 cmake_common_args=(
   "-DWANNIER90_SHARED_LIBS:BOOL=ON"
   "-DWANNIER90_TEST:BOOL=ON"
@@ -108,8 +106,15 @@ for mpi in '' mpich openmpi ; do
   %cmake \
     ${cmake_common_args[@]} \
     ${cmake_mpi_args[@]}
-  %cmake_build
 
+  [ -n "$mpi" ] && module unload mpi/${mpi}-%{_arch}
+done
+
+
+%build
+for mpi in '' mpich openmpi ; do
+  [ -n "$mpi" ] && module load mpi/${mpi}-%{_arch}
+  %cmake_build
   [ -n "$mpi" ] && module unload mpi/${mpi}-%{_arch}
 done
 
