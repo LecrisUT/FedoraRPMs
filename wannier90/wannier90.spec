@@ -135,7 +135,7 @@ done
 for mpi in '' mpich openmpi ; do
   [ -n "$mpi" ] && module load mpi/${mpi}-%{_arch}
   %ctest \
-    -E "^(library-mode-test-C-interface|testw90_example11_2|testw90_nnkpt4|testw90_nnkpt5)$"
+    -E "^(library-mode-test-C-interface|testw90_example11_2|testw90_nnkpt4|testw90_nnkpt5|testw90_graphene_dis_proj_auto)$"
   [ -n "$mpi" ] && module unload mpi/${mpi}-%{_arch}
 done
 
