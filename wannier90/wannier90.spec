@@ -1,8 +1,7 @@
 %global soversion 4
 
 %global         forgeurl0 https://github.com/wannier-developers/wannier90
-%global         version0  4.0.2
-%global         commit0   65fde2f1011b8655c33421f4055b5986fa429a11
+%global         version0  4.0.3
 
 Name:           wannier90
 Summary:        Maximally-Localised Generalised Wannier Functions Code
@@ -154,6 +153,7 @@ done
 %{_libdir}/pkgconfig/wannier90.pc
 
 %files openmpi
+%license LICENSE
 %{_libdir}/openmpi/bin/wannier90.x
 %{_libdir}/openmpi/bin/postw90.x
 %{_libdir}/openmpi/lib/libwannier90.so.%{soversion}{,.*}
@@ -166,6 +166,7 @@ done
 %{_libdir}/openmpi/lib/pkgconfig/wannier90.pc
 
 %files mpich
+%license LICENSE
 %{_libdir}/mpich/bin/wannier90.x
 %{_libdir}/mpich/bin/postw90.x
 %{_libdir}/mpich/lib/libwannier90.so.%{soversion}{,.*}
