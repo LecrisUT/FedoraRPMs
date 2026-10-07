@@ -14,6 +14,8 @@ License:        LGPL-2.1-or-later
 URL:            https://www.wannier.org/
 
 Source:         %{forgesource0}
+# Fix .pc file
+Patch:          https://github.com/wannier-developers/wannier90/pull/746.patch
 # ix86 because https://fedoraproject.org/wiki/Changes/EncourageI686LeafRemoval
 # s390x because tests fail and unknown if upstream wants to support
 #  https://github.com/wannier-developers/wannier90/issues/731

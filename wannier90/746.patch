@@ -1,0 +1,51 @@
+From d692566d601d28d585d7a0313542887aca62797f Mon Sep 17 00:00:00 2001
+From: Cristian Le <git@lecris.dev>
+Date: Wed, 7 Oct 2026 13:09:00 +0200
+Subject: [PATCH] Account for absolute paths in .pc file
+
+---
+ CMakeLists.txt        | 15 +++++++++++++++
+ cmake/wannier90.pc.in |  6 +++---
+ 2 files changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 72c4644e..c5764d0a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -144,6 +144,21 @@ endif ()
+ ## Installs
+ if (WANNIER90_INSTALL)
+ 	set(WANNIER90_PKGCONFIG_FILE "${WANNIER90_LIBRARY_NAME}.pc")
++	if (IS_ABSOLUTE "${CMAKE_INSTALL_LIBDIR}")
++		set(pkgconf_libdir "${CMAKE_INSTALL_LIBDIR}")
++	else ()
++		set(pkgconf_libdir "\${prefix}/${CMAKE_INSTALL_LIBDIR}")
++	endif ()
++	if (IS_ABSOLUTE "${CMAKE_INSTALL_INCLUDEDIR}")
++		set(pkgconf_includedir "${CMAKE_INSTALL_INCLUDEDIR}")
++	else ()
++		set(pkgconf_includedir "\${prefix}/${CMAKE_INSTALL_INCLUDEDIR}")
++	endif ()
++	if (IS_ABSOLUTE "${CMAKE_INSTALL_MODULEDIR}")
++		set(pkgconf_moduledir "${CMAKE_INSTALL_MODULEDIR}")
++	else ()
++		set(pkgconf_moduledir "\${prefix}/${CMAKE_INSTALL_MODULEDIR}")
++	endif ()
+ 	configure_file(cmake/wannier90.pc.in ${WANNIER90_PKGCONFIG_FILE} @ONLY)
+ 	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${WANNIER90_PKGCONFIG_FILE}
+ 			DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
+diff --git a/cmake/wannier90.pc.in b/cmake/wannier90.pc.in
+index 44e05dd5..eb66ae1d 100644
+--- a/cmake/wannier90.pc.in
++++ b/cmake/wannier90.pc.in
+@@ -1,7 +1,7 @@
+ prefix=@CMAKE_INSTALL_PREFIX@
+-libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
+-includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+-moduledir=${prefix}/@CMAKE_INSTALL_MODULEDIR@/Wannier90
++libdir=@pkgconf_libdir@
++includedir=@pkgconf_includedir@
++moduledir=@pkgconf_moduledir@/Wannier90
+ 
+ Name: wannier90
+ Version: @PROJECT_VERSION@
