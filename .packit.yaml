@@ -1,7 +1,7 @@
 _:
   - &trigger
     trigger: commit
-    branch: main
+    branch: chainmock
   - &actions-use-spec
     fix-spec-file: []
     create-archive:
@@ -17,7 +17,13 @@ _:
     fix-spec-file:
       - sh -c 'rust2rpm -r @${PACKIT_PROJECT_VERSION}'
 
-packages: {}
+packages:
+  python-chainmock:
+    paths: [ python-chainmock ]
+    specfile_path: python-chainmock.spec
+    downstream_package_name: python-chainmock
+    upstream_package_name: chainmock
+    actions: *actions-use-spec
 
 targets:
   - fedora-rawhide
@@ -26,7 +32,6 @@ targets:
 
 jobs:
   - job: copr_build
-    owner: lecris
     <<: *trigger
 #  - job: tests
 #    <<: *trigger
