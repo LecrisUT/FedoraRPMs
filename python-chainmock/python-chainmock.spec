@@ -6,7 +6,9 @@ Summary:        A mocking library for Python and pytest
 License:        MIT
 
 URL:            https://chainmock.readthedocs.io/
-Source0:        %{pypi_source chainmock}
+# Note: cannot use the pypi source because it lacks the test files
+# https://github.com/ollipa/chainmock/issues/44
+Source0:        https://github.com/ollipa/chainmock/archive/v%{version}/chainmock-v%{version}.tar.gz
 
 BuildArch:      noarch
 
