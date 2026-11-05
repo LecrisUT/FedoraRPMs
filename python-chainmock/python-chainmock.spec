@@ -13,10 +13,6 @@ Source0:        https://github.com/ollipa/chainmock/archive/v%{version}/chainmoc
 BuildArch:      noarch
 
 BuildRequires:  python3-devel
-# Manually adding the test dependencies because `dev` is too broad
-# https://github.com/ollipa/chainmock/issues/43
-BuildRequires:  python3dist(pytest)
-BuildRequires:  python3dist(pytest-asyncio)
 
 %global _description %{expand:
 Chainmock is a mocking library for Python and pytest. Under the hood
@@ -37,10 +33,15 @@ Summary:        %{summary}
 
 %prep
 %autosetup -p1 -C
+# Remove the line trying to override our PYTHONPATH
+sed -i "/setenv = PYTHONPATH/d" tox.ini
+# i_unittest.py does not run properly for some reason
+# https://github.com/ollipa/chainmock/issues/45
+sed -i "/sh -c 'python tests\/integrations\/i_unittest.py/d" tox.ini
 
 
 %generate_buildrequires
-%pyproject_buildrequires
+%pyproject_buildrequires -e pytest-latest
 
 
 %build
@@ -53,7 +54,7 @@ Summary:        %{summary}
 
 
 %check
-%pytest
+%tox
 
 
 %files -n python3-chainmock -f %{pyproject_files}
